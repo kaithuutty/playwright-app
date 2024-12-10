@@ -35,7 +35,9 @@ app.post("/screenshot", upload.none(), async (req, res) => {
 
   try {
     // 使用 Playwright 截图
-    const browser = await chromium.launch();
+    const browser = await chromium.launch(
+        { args: ['--single-process'] }
+    );
     const page = await browser.newPage();
     await page.goto(url, { timeout: 60000 });
     const screenshotBuffer = await page.screenshot({ type: "png" });
